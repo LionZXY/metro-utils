@@ -31,7 +31,7 @@ class MultipleRoundProcessingTest {
                 package me.gulya.metro.sample
                 
                 import dev.zacsweers.metro.Assisted
-                import dev.zacsweers.metro.Inject
+                import dev.zacsweers.metro.AssistedInject
                 import me.gulya.metro.assisted.ContributesAssistedFactory
 
                 annotation class GenerateClass
@@ -43,8 +43,9 @@ class MultipleRoundProcessingTest {
                     }
                 }
                 
+                @AssistedInject
                 @ContributesAssistedFactory(SampleScope::class, SampleComponent.Factory::class)
-                class DefaultSampleComponent @Inject constructor(
+                class DefaultSampleComponent(
                     @Assisted val generated: SampleComponentGenerated
                 ) : SampleComponent
                 """
@@ -99,7 +100,7 @@ class MultipleRoundProcessingTest {
                     package me.gulya.metro.sample
                     
                     import dev.zacsweers.metro.Assisted
-                    import dev.zacsweers.metro.Inject
+                    import dev.zacsweers.metro.AssistedInject
                     import me.gulya.metro.assisted.ContributesAssistedFactory
 
                     annotation class GenerateClass
@@ -115,8 +116,9 @@ class MultipleRoundProcessingTest {
                         }
                     }
                     
+                    @AssistedInject
                     @ContributesAssistedFactory(SampleScope::class, SampleComponent.Factory::class)
-                    class DefaultSampleComponent @Inject constructor(
+                    class DefaultSampleComponent(
                         @Assisted val generated1: SampleComponentGenerated1,
                         @Assisted val generated2: SampleComponentGenerated2
                     ) : SampleComponent
@@ -211,7 +213,7 @@ class MultipleRoundProcessingTest {
                     package me.gulya.metro.sample
                     
                     import dev.zacsweers.metro.Assisted
-                    import dev.zacsweers.metro.Inject
+                    import dev.zacsweers.metro.AssistedInject
                     import me.gulya.metro.assisted.ContributesAssistedFactory
     
                     interface UnresolvedBoundType {
@@ -219,11 +221,12 @@ class MultipleRoundProcessingTest {
                         fun create(value: UnresolvedConstructorType): UnresolvedSuperType
                     }
                     
+                    @AssistedInject
                     @ContributesAssistedFactory(
                         scope = UnresolvedScopeType::class,
                         boundType = UnresolvedBoundType::class
                     )
-                    class DefaultSampleComponent @Inject constructor(
+                    class DefaultSampleComponent(
                         @Assisted val value: UnresolvedConstructorType
                     ) : UnresolvedSuperType
                     """
@@ -292,15 +295,16 @@ class MultipleRoundProcessingTest {
                     package me.gulya.metro.sample
                     
                     import dev.zacsweers.metro.Assisted
-                    import dev.zacsweers.metro.Inject
+                    import dev.zacsweers.metro.AssistedInject
                     import me.gulya.metro.assisted.ContributesAssistedFactory
     
                     // Using undefined types to trigger resolution failures
+                    @AssistedInject
                     @ContributesAssistedFactory(
                         scope = NonExistentScope::class,  // Undefined scope
                         boundType = NonExistentBoundType::class  // Undefined bound type
                     )
-                    class InvalidComponent @Inject constructor(
+                    class InvalidComponent(
                         @Assisted val param1: UnresolvedParam1,  // Undefined parameter type
                         @Assisted val param2: UnresolvedParam2   // Another undefined parameter type
                     ) : UnresolvedSuperType  // Undefined supertype
@@ -363,7 +367,7 @@ class MultipleRoundProcessingTest {
                     package me.gulya.metro.sample
                     
                     import dev.zacsweers.metro.Assisted
-                    import dev.zacsweers.metro.Inject
+                    import dev.zacsweers.metro.AssistedInject
                     import me.gulya.metro.assisted.ContributesAssistedFactory
     
                     interface ValidBoundType {
@@ -373,11 +377,12 @@ class MultipleRoundProcessingTest {
                     interface ValidSuperType
     
                     // Mix of valid and invalid types
+                    @AssistedInject
                     @ContributesAssistedFactory(
                         scope = ValidScope::class,  // Valid scope
                         boundType = ValidBoundType::class  // Valid bound type
                     )
-                    class PartiallyInvalidComponent @Inject constructor(
+                    class PartiallyInvalidComponent(
                         @Assisted val param: UnresolvedParam  // Single unresolved parameter
                     ) : ValidSuperType
                     """

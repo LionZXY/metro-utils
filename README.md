@@ -71,8 +71,9 @@ interface MyClassFactory {
 2. Annotate your implementation class with `@ContributesAssistedFactory` in the implementation module:
 
 ```kotlin
+@AssistedInject
 @ContributesAssistedFactory(AppScope::class, MyClassFactory::class)
-class DefaultMyClass @Inject constructor(
+class DefaultMyClass(
     @Assisted param1: String,
     @Assisted param2: Int
 ) : MyClass

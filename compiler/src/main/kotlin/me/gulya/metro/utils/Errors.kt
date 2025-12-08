@@ -15,7 +15,7 @@ internal object Errors {
 
     fun primaryConstructorMustBeAnnotatedWithAssistedInject(className: String): String {
         return "Class '$className' annotated with @ContributesAssistedFactory " +
-                "must have its primary constructor annotated with @Inject"
+                "must have its primary constructor annotated with @AssistedInject"
     }
 
     fun boundTypeMustBeAbstractOrInterface(boundTypeName: String, assistedFactoryName: String): String {

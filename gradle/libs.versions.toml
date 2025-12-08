@@ -16,7 +16,7 @@ kotlinpoet-ksp = { module = "com.squareup:kotlinpoet-ksp", version.ref = "kotlin
 google-autoservice-annotations = "com.google.auto.service:auto-service-annotations:1.1.1"
 google-autoservice-ksp = "dev.zacsweers.autoservice:auto-service-ksp:1.1.0"
 
-# Metro provides @Assisted, @Inject, @AssistedFactory annotations
+# Metro provides @Assisted, @AssistedInject, @AssistedFactory annotations
 # metro-runtime is already defined above
 
 metro-utils-annotations = { module = "me.gulya.metro:annotations" }

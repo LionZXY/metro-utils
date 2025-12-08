@@ -16,6 +16,6 @@ dependencies {
     implementation(projects.annotations)
     implementation(projects.samples.library.api)
 
-    // Metro runtime provides @Assisted, @Inject annotations
+    // Metro runtime provides @Assisted, @AssistedInject annotations
     implementation(libs.metro.runtime)
 }

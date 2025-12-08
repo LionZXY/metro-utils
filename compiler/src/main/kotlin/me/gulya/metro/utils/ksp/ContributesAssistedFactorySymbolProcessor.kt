@@ -27,7 +27,6 @@ import com.squareup.kotlinpoet.ksp.toTypeName
 import com.squareup.kotlinpoet.ksp.writeTo
 import dev.zacsweers.metro.Assisted
 import dev.zacsweers.metro.AssistedInject
-import dev.zacsweers.metro.Inject
 import me.gulya.metro.assisted.AssistedKey
 import me.gulya.metro.assisted.ContributesAssistedFactory
 import me.gulya.metro.utils.BoundType

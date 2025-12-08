@@ -10,7 +10,7 @@ dependencies {
     implementation(projects.di)
     implementation(libs.metro.utils.annotations)
 
-    // Metro runtime provides @Assisted, @Inject annotations
+    // Metro runtime provides @Assisted, @AssistedInject annotations
     implementation(libs.metro.runtime)
 
     ksp(libs.metro.utils.compiler)

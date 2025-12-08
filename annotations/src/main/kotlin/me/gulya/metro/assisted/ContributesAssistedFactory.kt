@@ -24,8 +24,9 @@ import kotlin.reflect.KClass
  *   ): MyClass
  * }
  *
+ * @AssistedInject
  * @ContributesAssistedFactory(AppScope::class, MyFactory::class)
- * class DefaultMyClass @Inject constructor(
+ * class DefaultMyClass(
  *   regularParam: String,
  *   @AssistedKey assistedParam: Int
  * ) : MyClass
