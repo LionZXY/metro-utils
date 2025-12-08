@@ -5,6 +5,6 @@ plugins {
 kotlin {
     jvmToolchain(17)
     compilerOptions {
-        optIn.add("com.squareup.anvil.annotations.ExperimentalAnvilApi")
+        optIn.add("dev.zacsweers.metro.ExperimentalMetroApi")
     }
 }

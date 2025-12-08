@@ -1,27 +1,26 @@
 [versions]
-kotlin = "2.1.21"
-anvil = "0.4.1"
-ksp = "2.1.21-2.0.2"
-dagger = "2.56.2"
+kotlin = "2.2.21"
+metro = "0.6.10"
+ksp = "2.2.21-2.0.4"
 kotlinx-binaryCompatibility = "0.16.3"
 dropbox-dependencyGuard = "0.5.0"
 mavenPublish = "0.30.0"
 dokka = "1.9.20"
 kotlinpoet = "2.0.0"
+kctfork = "0.11.0"
 
 [libraries]
-anvil-compiler-api = { module = "dev.zacsweers.anvil:compiler-api", version.ref = "anvil" }
-anvil-compiler-utils = { module = "dev.zacsweers.anvil:compiler-utils", version.ref = "anvil" }
+metro-runtime = { module = "dev.zacsweers.metro:runtime", version.ref = "metro" }
 kotlinpoet = { module = "com.squareup:kotlinpoet", version.ref = "kotlinpoet" }
 kotlinpoet-ksp = { module = "com.squareup:kotlinpoet-ksp", version.ref = "kotlinpoet" }
 google-autoservice-annotations = "com.google.auto.service:auto-service-annotations:1.1.1"
 google-autoservice-ksp = "dev.zacsweers.autoservice:auto-service-ksp:1.1.0"
 
-dagger = { module = "com.google.dagger:dagger", version.ref = "dagger" }
-dagger-compiler = { module = "com.google.dagger:dagger-compiler", version.ref = "dagger" }
+# Metro provides @Assisted, @Inject, @AssistedFactory annotations
+# metro-runtime is already defined above
 
-anvil-utils-annotations = { module = "me.gulya.anvil:annotations" }
-anvil-utils-compiler = { module = "me.gulya.anvil:compiler" }
+metro-utils-annotations = { module = "me.gulya.metro:annotations" }
+metro-utils-compiler = { module = "me.gulya.metro:compiler" }
 
 google-truth = "com.google.truth:truth:1.4.2"
 junit = "junit:junit:4.13.2"
@@ -33,11 +32,14 @@ plugin-mavenPublish = { module = "com.vanniktech:gradle-maven-publish-plugin", v
 plugin-kotlin-jvm = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 plugin-kotlin-dokka = { module = "org.jetbrains.dokka:dokka-gradle-plugin", version.ref = "dokka" }
 
+kctfork-core = { module = "dev.zacsweers.kctfork:core", version.ref = "kctfork" }
+kctfork-ksp = { module = "dev.zacsweers.kctfork:ksp", version.ref = "kctfork" }
+
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
 kotlin-dokka = { id = "org.jetbrains.dokka", version.ref = "dokka" }
-anvil = { id = "dev.zacsweers.anvil", version.ref = "anvil" }
+metro = { id = "dev.zacsweers.metro", version.ref = "metro" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 kotlinx-binaryCompatibility = { id = "org.jetbrains.kotlinx.binary-compatibility-validator", version.ref = "kotlinx-binaryCompatibility" }
 dependencyGuard = { id = "com.dropbox.dependency-guard", version.ref = "dropbox-dependencyGuard" }

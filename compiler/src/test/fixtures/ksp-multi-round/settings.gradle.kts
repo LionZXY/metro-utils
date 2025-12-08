@@ -29,7 +29,7 @@ include(":app")
 
 includeBuild("../../../../../") {
     dependencySubstitution {
-        substitute(module("me.gulya.anvil:annotations")).using(project(":annotations"))
-        substitute(module("me.gulya.anvil:compiler")).using(project(":compiler"))
+        substitute(module("me.gulya.metro:annotations")).using(project(":annotations"))
+        substitute(module("me.gulya.metro:compiler")).using(project(":compiler"))
     }
 }
