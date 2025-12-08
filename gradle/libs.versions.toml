@@ -1,6 +1,6 @@
 [versions]
 kotlin = "2.2.21"
-metro = "0.6.10"
+metro = "0.8.2"
 ksp = "2.2.21-2.0.4"
 kotlinx-binaryCompatibility = "0.16.3"
 dropbox-dependencyGuard = "0.5.0"

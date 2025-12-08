@@ -26,6 +26,7 @@ import com.squareup.kotlinpoet.ksp.toClassName
 import com.squareup.kotlinpoet.ksp.toTypeName
 import com.squareup.kotlinpoet.ksp.writeTo
 import dev.zacsweers.metro.Assisted
+import dev.zacsweers.metro.AssistedInject
 import dev.zacsweers.metro.Inject
 import me.gulya.metro.assisted.AssistedKey
 import me.gulya.metro.assisted.ContributesAssistedFactory
@@ -153,7 +154,9 @@ internal class ContributesAssistedFactorySymbolProcessor(
                 )
             }
 
-            if (!primaryConstructor.isAnnotationPresent(Inject::class)) {
+            if (!primaryConstructor.isAnnotationPresent(AssistedInject::class)
+                && !assistedFactoryClass.isAnnotationPresent(AssistedInject::class)
+            ) {
                 throw SymbolProcessingException(
                     primaryConstructor,
                     Errors.primaryConstructorMustBeAnnotatedWithAssistedInject(assistedFactoryClass.simpleName.asString()),
