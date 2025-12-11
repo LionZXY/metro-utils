@@ -1,7 +1,9 @@
-# Metro Utils
+# Metro Utils ![Maven Central Version](https://img.shields.io/maven-central/v/uk.kulikov.metro/compiler)
 
 Metro Utils is a library that provides a set of annotations to simplify the development of modular applications with
 Metro DI.
+
+> Original author: [**IlyaGulya**/anvil-utils](https://github.com/IlyaGulya/anvil-utils)
 
 ## Features
 
@@ -12,11 +14,11 @@ Metro DI.
 
 | Metro Utils Version | Metro Version | Plugin ID           |
 |---------------------|---------------|---------------------|
-| 0.4.0               | 0.6.4+        | dev.zacsweers.metro |
+| 0.5.0               | 0.8.2+        | dev.zacsweers.metro |
 
 ## Getting Started
 
-1. Ensure you have at least `0.6.4` version of Metro DI in your project.
+1. Ensure you have at least `0.8.2` version of Metro DI in your project.
 2. Ensure you have `ksp` plugin applied to your project:
     ```kotlin
     plugins {
@@ -27,15 +29,15 @@ Metro DI.
 3. Add the following dependencies to your project:
     ```kotlin
     dependencies {
-        implementation("uk.kulikov.metro:annotations:0.4.0")
-        ksp("uk.kulikov.metro:compiler:0.4.0")
+        implementation("uk.kulikov.metro:annotations:0.5.0")
+        ksp("uk.kulikov.metro:compiler:0.5.0")
     }
     ```
 
 4. Enable Metro in your project by applying the Metro Gradle plugin:
     ```kotlin
     plugins {
-        id("dev.zacsweers.metro") version "0.6.4"
+        id("dev.zacsweers.metro") version "0.8.2"
     }
     ```
 

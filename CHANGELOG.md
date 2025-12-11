@@ -1,6 +1,6 @@
 # Change Log
 
-## [Unreleased]
+## [0.5.0] - 2025-12-11
 
 ### Changed
 
@@ -8,7 +8,7 @@
     - Renamed project from `anvil-utils` to `metro-utils`
     - Changed package names from `me.gulya.anvil` to `me.gulya.metro`, then to `uk.kulikov.metro`
   - Changed group ID from `me.gulya.anvil` to `me.gulya.metro`, then to `uk.kulikov.metro`
-    - Updated to use Metro 0.6.4+ and removed Anvil dependencies
+    - Updated to use Metro 0.8.2+ and removed Anvil dependencies
     - Removed embedded code generator support (Metro uses KSP only)
     - Updated generated `@ContributesBinding` annotation to use Metro's API
 
@@ -84,7 +84,7 @@
 
 - Initial release.
 
-[Unreleased]: https://github.com/LionZXY/metro-utils/compare/v0.4.0...HEAD
+[0.5.0]: https://github.com/LionZXY/metro-utils/compare/v0.5.0
 
 [0.4.0]: https://github.com/LionZXY/metro-utils/releases/tag/v0.4.0
 
