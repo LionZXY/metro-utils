@@ -27,8 +27,8 @@ Metro DI.
 3. Add the following dependencies to your project:
     ```kotlin
     dependencies {
-        implementation("me.gulya.metro:annotations:0.4.0")
-        ksp("me.gulya.metro:compiler:0.4.0")
+        implementation("uk.kulikov.metro:annotations:0.4.0")
+        ksp("uk.kulikov.metro:compiler:0.4.0")
     }
     ```
 
@@ -92,7 +92,7 @@ interface DefaultMyClass_AssistedFactory : MyClassFactory {
 ### Module structure in the project
 
 - `:compiler` - contains KSP code generators
-    - Package `me.gulya.metro.utils.ksp` - KSP code generators
+    - Package `uk.kulikov.metro.utils.ksp` - KSP code generators
 - `:annotations` - contains annotations supported by this code generator
 - `:samples` - sample project with examples of usage
     - `:samples:entrypoint` - entrypoint modules showcasing usage of KSP code generators.

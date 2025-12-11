@@ -29,7 +29,7 @@ include(":app")
 
 includeBuild("../../../../../") {
     dependencySubstitution {
-        substitute(module("me.gulya.metro:annotations")).using(project(":annotations"))
-        substitute(module("me.gulya.metro:compiler")).using(project(":compiler"))
+        substitute(module("uk.kulikov.metro:annotations")).using(project(":annotations"))
+        substitute(module("uk.kulikov.metro:compiler")).using(project(":compiler"))
     }
 }

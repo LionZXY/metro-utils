@@ -1,4 +1,4 @@
-plugins {
+    plugins {
     `embedded-kotlin`
     `kotlin-dsl`
     `java-gradle-plugin`
@@ -15,7 +15,7 @@ gradlePlugin {
     plugins {
         register("publish") {
             id = "conventions.publish"
-            implementationClass = "me.gulya.convention.PublishConventionPlugin"
+            implementationClass = "uk.kulikov.convention.PublishConventionPlugin"
         }
     }
 }

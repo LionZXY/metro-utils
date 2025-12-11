@@ -11,7 +11,7 @@ permissions:
 jobs:
   publish-release:
     runs-on: ubuntu-latest
-    if: github.repository == 'IlyaGulya/anvil-utils'
+    if: github.repository == 'LionZXY/metro-utils'
     timeout-minutes: 25
 
     steps:
@@ -29,7 +29,7 @@ jobs:
           ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.SONATYPE_NEXUS_USERNAME }}
           ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.SONATYPE_NEXUS_PASSWORD }}
           ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.ARTIFACT_SIGNING_PRIVATE_KEY }}
-          ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ''
+          ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.ARTIFACT_SIGNING_PRIVATE_KEY_PASSWORD }}
 
       - name: Extract release notes
         id: release_notes

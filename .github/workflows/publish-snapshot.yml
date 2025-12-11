@@ -9,7 +9,7 @@ on:
 jobs:
   publish-snapshot:
     runs-on: macos-14
-    if: github.repository == 'IlyaGulya/anvil-utils'
+    if: github.repository == 'LionZXY/metro-utils'
     timeout-minutes: 25
 
     steps:

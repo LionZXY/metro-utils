@@ -19,8 +19,8 @@ google-autoservice-ksp = "dev.zacsweers.autoservice:auto-service-ksp:1.1.0"
 # Metro provides @Assisted, @AssistedInject, @AssistedFactory annotations
 # metro-runtime is already defined above
 
-metro-utils-annotations = { module = "me.gulya.metro:annotations" }
-metro-utils-compiler = { module = "me.gulya.metro:compiler" }
+metro-utils-annotations = { module = "uk.kulikov.metro:annotations" }
+metro-utils-compiler = { module = "uk.kulikov.metro:compiler" }
 
 google-truth = "com.google.truth:truth:1.4.2"
 junit = "junit:junit:4.13.2"

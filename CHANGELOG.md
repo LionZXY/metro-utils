@@ -6,8 +6,8 @@
 
 - **BREAKING**: Migrated from Anvil DI to Metro DI
     - Renamed project from `anvil-utils` to `metro-utils`
-    - Changed package names from `me.gulya.anvil` to `me.gulya.metro`
-    - Changed group ID from `me.gulya.anvil` to `me.gulya.metro`
+    - Changed package names from `me.gulya.anvil` to `me.gulya.metro`, then to `uk.kulikov.metro`
+  - Changed group ID from `me.gulya.anvil` to `me.gulya.metro`, then to `uk.kulikov.metro`
     - Updated to use Metro 0.6.4+ and removed Anvil dependencies
     - Removed embedded code generator support (Metro uses KSP only)
     - Updated generated `@ContributesBinding` annotation to use Metro's API
@@ -26,7 +26,7 @@
 ### Fixed
 
 - Add workaround for KSP bug which leads to multiple instances of the same symbol in the same
-  round https://github.com/google/ksp/issues/1993 (fixes [Issue #4](https://github.com/IlyaGulya/metro-utils/issues/4))
+  round https://github.com/google/ksp/issues/1993 (fixes [Issue #4](https://github.com/IlyaGulya/anvil-utils/issues/4))
 
 ## [0.3.0-beta02] - 2024-12-14
 
@@ -37,7 +37,7 @@
 ### Fixed
 
 - Correctly defer symbols with unresolved references to the next KSP round (
-  fixes [Issue #4](https://github.com/IlyaGulya/metro-utils/issues/4))
+  fixes [Issue #4](https://github.com/IlyaGulya/anvil-utils/issues/4))
 
 ## [0.3.0-beta01] - 2024-05-30
 
@@ -56,7 +56,7 @@
 
 ### Fixed
 
-- Fixed lambda type resolving in KSP processor [\#2](https://github.com/IlyaGulya/metro-utils/issues/2)
+- Fixed lambda type resolving in KSP processor [\#2](https://github.com/IlyaGulya/anvil-utils/issues/2)
 
 ## [0.2.0-beta02] - 2024-05-30
 
@@ -84,20 +84,20 @@
 
 - Initial release.
 
-[Unreleased]: https://github.com/IlyaGulya/metro-utils/compare/v0.4.0...HEAD
+[Unreleased]: https://github.com/LionZXY/metro-utils/compare/v0.4.0...HEAD
 
-[0.4.0]: https://github.com/IlyaGulya/metro-utils/releases/tag/v0.4.0
+[0.4.0]: https://github.com/LionZXY/metro-utils/releases/tag/v0.4.0
 
-[0.3.0-beta03]: https://github.com/IlyaGulya/metro-utils/releases/tag/v0.3.0-beta03
+[0.3.0-beta03]: https://github.com/LionZXY/metro-utils/releases/tag/v0.3.0-beta03
 
-[0.3.0-beta02]: https://github.com/IlyaGulya/metro-utils/releases/tag/v0.3.0-beta02
+[0.3.0-beta02]: https://github.com/LionZXY/metro-utils/releases/tag/v0.3.0-beta02
 
-[0.3.0-beta01]: https://github.com/IlyaGulya/metro-utils/releases/tag/v0.3.0-beta01
+[0.3.0-beta01]: https://github.com/LionZXY/metro-utils/releases/tag/v0.3.0-beta01
 
-[0.2.1-beta01]: https://github.com/IlyaGulya/metro-utils/releases/tag/v0.2.1-beta01
+[0.2.1-beta01]: https://github.com/LionZXY/metro-utils/releases/tag/v0.2.1-beta01
 
-[0.2.0-beta02]: https://github.com/IlyaGulya/metro-utils/releases/tag/v0.2.0-beta02
+[0.2.0-beta02]: https://github.com/LionZXY/metro-utils/releases/tag/v0.2.0-beta02
 
-[0.2.0-beta01]: https://github.com/IlyaGulya/metro-utils/releases/tag/v0.2.0-beta01
+[0.2.0-beta01]: https://github.com/LionZXY/metro-utils/releases/tag/v0.2.0-beta01
 
-[0.1.0]: https://github.com/IlyaGulya/metro-utils/releases/tag/v0.1.0
+[0.1.0]: https://github.com/LionZXY/metro-utils/releases/tag/v0.1.0
