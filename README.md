@@ -9,6 +9,7 @@ Metro DI.
 
 - `@ContributesAssistedFactory` - automatically generates assisted factories for annotated classes and contributes them
   to the specified scope as bindings of the provided factory type.
+  > Discussion in [ZacSweers/metro](https://github.com/ZacSweers/metro/discussions/1300)
 
 ## Compatibility Map
 
