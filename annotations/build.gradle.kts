@@ -7,8 +7,8 @@ plugins {
 publish {
     configurePom(
         artifactId = "annotations",
-        pomName = "Anvil Utils Annotations",
-        pomDescription = "Utility annotations used to generate code using anvil-utils",
+        pomName = "Metro Utils Annotations",
+        pomDescription = "Utility annotations used to generate code using metro-utils",
     )
 }
 

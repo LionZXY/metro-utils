@@ -1,14 +1,7 @@
 plugins {
     alias(libs.plugins.kotlin.jvm)
-    alias(libs.plugins.anvil)
+    alias(libs.plugins.metro)
     alias(libs.plugins.ksp)
-}
-
-anvil {
-    useKsp(
-        contributesAndFactoryGeneration = true,
-    )
-    generateDaggerFactories = true
 }
 
 kotlin {
@@ -23,5 +16,6 @@ dependencies {
     implementation(projects.annotations)
     implementation(projects.samples.library.api)
 
-    implementation(libs.dagger)
+    // Metro runtime provides @Assisted, @AssistedInject annotations
+    implementation(libs.metro.runtime)
 }

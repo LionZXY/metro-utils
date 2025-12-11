@@ -1,0 +1,11 @@
+package uk.kulikov.metro.utils.sample
+
+import dev.zacsweers.metro.Assisted
+import dev.zacsweers.metro.AssistedInject
+import uk.kulikov.metro.assisted.ContributesAssistedFactory
+
+@ContributesAssistedFactory(SampleScope::class, TestApi.Factory::class)
+class DefaultTestApi @AssistedInject constructor(
+    @Assisted("arg2") private val arg1: String,
+    @Assisted("arg1") private val arg: Int,
+) : TestApi

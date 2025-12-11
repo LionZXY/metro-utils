@@ -7,8 +7,8 @@ plugins {
 publish {
     configurePom(
         artifactId = "compiler",
-        pomName = "Anvil Utils Compiler",
-        pomDescription = "Code generator for anvil-utils",
+        pomName = "Metro Utils Compiler",
+        pomDescription = "Code generator for metro-utils",
     )
 }
 
@@ -21,12 +21,10 @@ tasks.withType<Test> {
 dependencies {
     implementation(projects.annotations)
 
-    api(libs.anvil.compiler.api)
+    implementation(libs.metro.runtime)
 
-    implementation(libs.anvil.compiler.utils)
     implementation(libs.kotlinpoet)
     implementation(libs.kotlinpoet.ksp)
-    implementation(libs.dagger)
 
     implementation(libs.ksp.api)
 
@@ -34,8 +32,9 @@ dependencies {
     ksp(libs.google.autoservice.ksp)
 
     testImplementation(libs.junit)
-    testImplementation(testFixtures(libs.anvil.compiler.utils))
     testImplementation(libs.google.truth)
+    testImplementation(libs.kctfork.core)
+    testImplementation(libs.kctfork.ksp)
 
     testImplementation(gradleTestKit())
     testImplementation(kotlin("test"))
