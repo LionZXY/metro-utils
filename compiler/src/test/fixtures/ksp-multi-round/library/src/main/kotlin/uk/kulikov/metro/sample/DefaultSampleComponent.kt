@@ -8,5 +8,5 @@ import uk.kulikov.metro.assisted.ContributesAssistedFactory
 @ContributesAssistedFactory(SampleScope::class, SampleComponent.Factory::class)
 class DefaultSampleComponent(
     val generated: SampleComponentGenerated, // This depends on the generated class
-    @Assisted val string: String,
+    @Assisted val str: String,
 ) : SampleComponent

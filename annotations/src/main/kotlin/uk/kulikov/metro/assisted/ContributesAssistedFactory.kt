@@ -8,8 +8,10 @@ import kotlin.reflect.KClass
  *
  * [boundType] should be treated the same way as regular Metro @AssistedFactory.
  * [boundType] should conform to the same requirements as regular Metro @AssistedFactory.
- * [boundType] factory method can have @Assisted parameters. You should
- * use another annotation on your [boundType] factory method parameters:
+ * Under Metro 1.x the [boundType] factory-method parameters are matched against the
+ * implementation constructor's @Assisted parameters by type, name and order — there are no
+ * string assisted keys. If a factory-method parameter name differs from the constructor
+ * parameter name, annotate it with @AssistedKey("<constructorParamName>").
  *
  * Usage example:
  *
@@ -28,16 +30,16 @@ import kotlin.reflect.KClass
  * @ContributesAssistedFactory(AppScope::class, MyFactory::class)
  * class DefaultMyClass(
  *   regularParam: String,
- *   @AssistedKey assistedParam: Int
+ *   @Assisted assistedParam: Int
  * ) : MyClass
  * ```
  *
  * The following factory will be generated, implementing MyFactory:
  *
  * ```
- * @ContributesBinding(AppScope::class, MyFactory::class)
+ * @ContributesBinding(AppScope::class, binding<MyFactory>())
  * @AssistedFactory
- * interface MyClass_AssistedFactory : MyFactory {
+ * abstract class MyClass_AssistedFactory : MyFactory {
  *   override fun create(
  *      assistedParam: Int,
  *   ): DefaultMyClass
