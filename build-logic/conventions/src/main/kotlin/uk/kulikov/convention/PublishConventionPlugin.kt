@@ -16,7 +16,10 @@ open class PublishConventionPlugin : Plugin<Project> {
         target.extensions.create("publish", PublishExtension::class.java)
 
         target.plugins.apply(target.libs.plugins.mavenPublish.get().pluginId)
-        target.plugins.apply(target.libs.plugins.kotlin.dokka.get().pluginId)
+        // NOTE: Dokka 1.9.20 cannot run on JDK 21+/25 (it fails parsing the JVM version, e.g.
+        // "java.lang.IllegalArgumentException: 25.0.3"). The javadoc jar therefore uses
+        // JavadocJar.Empty() below instead of Dokka so publishing works on modern JDKs. Re-enable
+        // Dokka here (and switch JavadocJar back to Dokka) once the project migrates to Dokka 2.x.
 
         val mavenPublishing = target.extensions
             .getByType(MavenPublishBaseExtension::class.java)
@@ -31,7 +34,7 @@ open class PublishConventionPlugin : Plugin<Project> {
         target.plugins.withId("org.jetbrains.kotlin.jvm") {
             mavenPublishing.configure(
                 platform = KotlinJvm(
-                    javadocJar = JavadocJar.Dokka(DOKKA_HTML),
+                    javadocJar = JavadocJar.Empty(),
                     sourcesJar = true,
                 ),
             )
@@ -43,10 +46,6 @@ open class PublishConventionPlugin : Plugin<Project> {
 //    target.tasks.withType(GenerateModuleMetadata::class.java).configureEach {
 //      it.mustRunAfter(target.tasks.withType(Jar::class.java))
 //    }
-    }
-
-    companion object {
-        internal const val DOKKA_HTML = "dokkaHtml"
     }
 }
 

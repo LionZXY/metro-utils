@@ -1,7 +1,3 @@
-import dev.zacsweers.metro.Assisted
-import dev.zacsweers.metro.AssistedFactory
-import uk.kulikov.metro.assisted.AssistedKey
-
 internal object Errors {
     fun missingBoundType(className: String): String {
         return "The @ContributesAssistedFactory annotation on class '$className' " +
@@ -34,20 +30,11 @@ internal object Errors {
                 "'$assistedFactoryName'"
     }
 
-    fun parameterMustBeAnnotatedWithAssistedKey(
-        factoryParameterName: String,
-        boundTypeName: String,
-        factoryMethodName: String
-    ): String {
-        return "The parameter '${factoryParameterName}' in the factory method " +
-                "'${boundTypeName}.${factoryMethodName}' must be annotated with " +
-                "@${AssistedKey::class.simpleName} instead of @${Assisted::class.simpleName} " +
-                "to distinguish factory method parameters from constructor parameters"
-    }
-
     fun parameterDoesNotMatchAssistedParameter(factoryParameterName: String, assistedFactoryName: String): String {
         return "The factory method parameter '${factoryParameterName}' does not match any @Assisted parameter " +
-                "in the primary constructor of '${assistedFactoryName}'"
+                "in the primary constructor of '${assistedFactoryName}' by type and name. Under Metro 1.x " +
+                "assisted parameters are matched by type and name; use @AssistedKey(\"<constructorParamName>\") " +
+                "on the factory method parameter if its name differs from the constructor parameter name"
     }
 
     fun boundTypeMustBeClassOrInterface(boundTypeName: String): String {

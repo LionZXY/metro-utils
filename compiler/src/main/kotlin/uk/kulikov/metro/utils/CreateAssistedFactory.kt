@@ -8,7 +8,6 @@ import com.squareup.kotlinpoet.KModifier
 import com.squareup.kotlinpoet.ParameterSpec
 import com.squareup.kotlinpoet.TypeName
 import com.squareup.kotlinpoet.TypeSpec
-import dev.zacsweers.metro.Assisted
 import dev.zacsweers.metro.AssistedFactory
 
 fun createAssistedFactory(
@@ -47,11 +46,13 @@ fun createAssistedFactory(
                         .builder(factoryMethod.name)
                         .addModifiers(KModifier.OVERRIDE, KModifier.ABSTRACT)
                         .apply {
+                            // Metro 1.x matches assisted factory parameters by type + name + order.
+                            // The factory-method parameters carry NO @Assisted annotation (and no
+                            // string identifier — `@Assisted` has no `value` member since Metro 1.0).
                             factoryMethod.parameters.forEach { parameter ->
                                 addParameter(
                                     ParameterSpec
                                         .builder(parameter.name, parameter.type)
-                                        .assisted(parameter.assistedKeyValue)
                                         .build(),
                                 )
                             }
@@ -88,18 +89,4 @@ data class FactoryMethod(
 data class FactoryMethodParameter(
     val type: TypeName,
     val name: String,
-    val assistedKeyValue: String?
 )
-
-private fun ParameterSpec.Builder.assisted(value: String?): ParameterSpec.Builder {
-    if (value == null) return this
-    addAnnotation(
-        AnnotationSpec
-            .builder(Assisted::class)
-            .apply {
-                addMember("%S", value)
-            }
-            .build(),
-    )
-    return this
-}

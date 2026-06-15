@@ -1,6 +1,7 @@
 package uk.kulikov.metro.sample
 
 import dev.zacsweers.metro.DependencyGraph
+import dev.zacsweers.metro.createGraph
 
 @DependencyGraph(SampleScope::class)
 interface AppComponent {

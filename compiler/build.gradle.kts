@@ -16,6 +16,14 @@ tasks.withType<Test> {
     testLogging {
         events("passed", "skipped", "failed", "standardOut", "standardError")
     }
+    // The KspMultiRoundFunctionalTest spawns a nested Gradle build (via GradleTestKit) that applies
+    // the Metro 1.2.1 Gradle plugin, which requires a JVM runtime >= 21. GradleTestKit inherits the
+    // JVM running the test, so the test task must execute on a 21+ JDK even though jvmTarget stays 17.
+    javaLauncher.set(
+        javaToolchains.launcherFor {
+            languageVersion.set(JavaLanguageVersion.of(25))
+        }
+    )
 }
 
 dependencies {

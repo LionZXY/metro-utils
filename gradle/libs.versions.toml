@@ -1,20 +1,20 @@
 [versions]
-kotlin = "2.2.21"
-metro = "0.8.2"
-ksp = "2.2.21-2.0.4"
+kotlin = "2.3.21"
+metro = "1.2.1"
+ksp = "2.3.9"
 kotlinx-binaryCompatibility = "0.16.3"
 dropbox-dependencyGuard = "0.5.0"
 mavenPublish = "0.30.0"
 dokka = "1.9.20"
-kotlinpoet = "2.0.0"
-kctfork = "0.11.0"
+kotlinpoet = "2.3.0"
+kctfork = "0.12.1"
 
 [libraries]
 metro-runtime = { module = "dev.zacsweers.metro:runtime", version.ref = "metro" }
 kotlinpoet = { module = "com.squareup:kotlinpoet", version.ref = "kotlinpoet" }
 kotlinpoet-ksp = { module = "com.squareup:kotlinpoet-ksp", version.ref = "kotlinpoet" }
 google-autoservice-annotations = "com.google.auto.service:auto-service-annotations:1.1.1"
-google-autoservice-ksp = "dev.zacsweers.autoservice:auto-service-ksp:1.1.0"
+google-autoservice-ksp = "dev.zacsweers.autoservice:auto-service-ksp:1.2.0"
 
 # Metro provides @Assisted, @AssistedInject, @AssistedFactory annotations
 # metro-runtime is already defined above

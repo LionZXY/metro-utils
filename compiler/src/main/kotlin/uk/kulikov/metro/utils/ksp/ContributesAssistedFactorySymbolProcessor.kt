@@ -107,18 +107,19 @@ internal class ContributesAssistedFactorySymbolProcessor(
                 )
             },
             scope = annotation.scope().toClassName(),
-            factoryMethod = generationDetails.factoryMethod.run {
-                FactoryMethod(
-                    name = simpleName.asString(),
-                    parameters = parameters.map { parameter ->
-                        FactoryMethodParameter(
-                            type = parameter.type.toTypeName(),
-                            name = parameter.name!!.asString(),
-                            assistedKeyValue = parameter.assistedKeyValue(),
-                        )
-                    }
-                )
-            },
+            factoryMethod = FactoryMethod(
+                name = generationDetails.factoryMethod.simpleName.asString(),
+                // Metro 1.x matches assisted factory-method parameters against the constructor's
+                // @Assisted parameters by type + name (in order). We therefore emit each generated
+                // factory-method parameter using the matched constructor parameter's name, in the
+                // order of the bound type's factory method.
+                parameters = generationDetails.factoryParameters.map { constructorParameter ->
+                    FactoryMethodParameter(
+                        type = constructorParameter.type.resolve().toTypeName(),
+                        name = constructorParameter.name!!.asString(),
+                    )
+                },
+            ),
         )
         return factory.spec
     }
@@ -179,9 +180,12 @@ internal class ContributesAssistedFactorySymbolProcessor(
                 Errors.boundTypeMustHasSingleAbstractMethod(boundType.simpleName.asString()),
             )
             val factoryMethodParameters = factoryMethod.parameters
+            // Index the assisted constructor parameters by type + parameter name. Under Metro 1.x
+            // there are no string assisted keys, so same-type parameters are disambiguated purely
+            // by name.
             val constructorParameters = primaryConstructor.parameters
                 .filter { it.isAnnotationPresent(Assisted::class) }
-                .associateBy { ParameterKey(it.type.resolve().toTypeName(), it.assistedValue()) }
+                .associateBy { ParameterKey(it.type.resolve().toTypeName(), it.name!!.asString()) }
 
             if (constructorParameters.size != factoryMethodParameters.size) {
                 throw SymbolProcessingException(
@@ -194,36 +198,29 @@ internal class ContributesAssistedFactorySymbolProcessor(
                 )
             }
 
-            factoryMethodParameters.forEach { factoryParameter ->
-                val isAnnotatedWithAssisted = factoryParameter.isAnnotationPresent(Assisted::class)
-                val isAnnotatedWithAssistedKey = factoryParameter.isAnnotationPresent(AssistedKey::class)
-                if (isAnnotatedWithAssisted && !isAnnotatedWithAssistedKey) {
-                    throw SymbolProcessingException(
+            // Match each bound-type factory-method parameter to a constructor @Assisted parameter,
+            // preserving the factory method's parameter order. The expected constructor parameter
+            // name defaults to the factory-method parameter name, but a @AssistedKey("name") on the
+            // factory-method parameter overrides it (useful when the public factory uses a different
+            // parameter name than the implementation constructor).
+            val matchedConstructorParameters = factoryMethodParameters.map { factoryParameter ->
+                val expectedName = factoryParameter.assistedKeyValue()
+                    ?: factoryParameter.name!!.asString()
+                val key = ParameterKey(factoryParameter.type.resolve().toTypeName(), expectedName)
+                constructorParameters[key]
+                    ?: throw SymbolProcessingException(
                         factoryParameter,
-                        Errors.parameterMustBeAnnotatedWithAssistedKey(
+                        Errors.parameterDoesNotMatchAssistedParameter(
                             factoryParameter.name!!.asString(),
-                            boundType.simpleName.asString(),
-                            factoryMethod.simpleName.asString(),
+                            assistedFactoryClass.simpleName.asString(),
                         ),
                     )
-                }
-
-                val assistedKey = factoryParameter.assistedKeyValue()
-                val constructorParameter = constructorParameters[factoryParameter.asParameterKey { assistedKey }]
-
-                constructorParameter ?: throw SymbolProcessingException(
-                    factoryParameter,
-                    Errors.parameterDoesNotMatchAssistedParameter(
-                        factoryParameter.name!!.asString(),
-                        assistedFactoryClass.simpleName.asString(),
-                    ),
-                )
             }
 
             return GenerationDetails(
                 boundType = boundType,
                 factoryMethod = factoryMethod,
-                factoryParameters = constructorParameters,
+                factoryParameters = matchedConstructorParameters,
             )
         }
     }
@@ -285,16 +282,8 @@ internal class ContributesAssistedFactorySymbolProcessor(
 internal data class GenerationDetails(
     val boundType: KSClassDeclaration,
     val factoryMethod: KSFunctionDeclaration,
-    val factoryParameters: Map<ParameterKey, KSValueParameter>,
+    val factoryParameters: List<KSValueParameter>,
 )
-
-private fun KSValueParameter.asParameterKey(keyFactory: (KSValueParameter) -> String?): ParameterKey {
-    return ParameterKey(type.resolve().toTypeName(), keyFactory(this))
-}
-
-private fun KSValueParameter.assistedValue(): String? {
-    return annotationStringValue<Assisted>()
-}
 
 private fun KSValueParameter.assistedKeyValue(): String? {
     return annotationStringValue<AssistedKey>()

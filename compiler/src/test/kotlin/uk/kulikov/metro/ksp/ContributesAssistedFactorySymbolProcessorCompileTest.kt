@@ -11,8 +11,7 @@ import com.squareup.kotlinpoet.TypeSpec
 import com.squareup.kotlinpoet.ksp.writeTo
 import com.tschuchort.compiletesting.KotlinCompilation
 import com.tschuchort.compiletesting.SourceFile
-import com.tschuchort.compiletesting.kspWithCompilation
-import com.tschuchort.compiletesting.symbolProcessorProviders
+import com.tschuchort.compiletesting.configureKsp
 import uk.kulikov.metro.utils.ksp.ContributesAssistedFactorySymbolProcessor
 import org.jetbrains.kotlin.compiler.plugin.ExperimentalCompilerApi
 import org.junit.Test
@@ -59,11 +58,11 @@ class MultipleRoundProcessingTest {
                 """
                 )
             )
-            symbolProcessorProviders = mutableListOf(
-                GenerateClassProcessorProvider(),
-                ContributesAssistedFactorySymbolProcessor.Provider()
-            )
-            kspWithCompilation = true
+            configureKsp {
+                symbolProcessorProviders += GenerateClassProcessorProvider()
+                symbolProcessorProviders += ContributesAssistedFactorySymbolProcessor.Provider()
+                withCompilation = true
+            }
             inheritClassPath = true
             verbose = true // Enable to see KSP processing rounds
         }
@@ -133,9 +132,9 @@ class MultipleRoundProcessingTest {
                     """
                 )
             )
-            symbolProcessorProviders = mutableListOf(
+            configureKsp {
                 // First processor generates Generated1
-                object : SymbolProcessorProvider {
+                symbolProcessorProviders += object : SymbolProcessorProvider {
                     override fun create(environment: SymbolProcessorEnvironment): SymbolProcessor {
                         return object : SymbolProcessor {
                             private var generated = false
@@ -155,9 +154,9 @@ class MultipleRoundProcessingTest {
                             }
                         }
                     }
-                },
+                }
                 // Second processor generates Generated2 in later round
-                object : SymbolProcessorProvider {
+                symbolProcessorProviders += object : SymbolProcessorProvider {
                     override fun create(environment: SymbolProcessorEnvironment): SymbolProcessor {
                         return object : SymbolProcessor {
                             private var roundCount = 0
@@ -178,10 +177,10 @@ class MultipleRoundProcessingTest {
                             }
                         }
                     }
-                },
-                ContributesAssistedFactorySymbolProcessor.Provider()
-            )
-            kspWithCompilation = true
+                }
+                symbolProcessorProviders += ContributesAssistedFactorySymbolProcessor.Provider()
+                withCompilation = true
+            }
             inheritClassPath = true
         }
 
@@ -232,9 +231,9 @@ class MultipleRoundProcessingTest {
                     """
                 )
             )
-            symbolProcessorProviders = mutableListOf(
+            configureKsp {
                 // Helper processor to generate types in sequence
-                object : SymbolProcessorProvider {
+                symbolProcessorProviders += object : SymbolProcessorProvider {
                     override fun create(environment: SymbolProcessorEnvironment): SymbolProcessor {
                         return object : SymbolProcessor {
                             private var round = 0
@@ -266,10 +265,10 @@ class MultipleRoundProcessingTest {
                             }
                         }
                     }
-                },
-                ContributesAssistedFactorySymbolProcessor.Provider()
-            )
-            kspWithCompilation = true
+                }
+                symbolProcessorProviders += ContributesAssistedFactorySymbolProcessor.Provider()
+                withCompilation = true
+            }
             inheritClassPath = true
         }
 
@@ -311,10 +310,10 @@ class MultipleRoundProcessingTest {
                     """
                 )
             )
-            symbolProcessorProviders = mutableListOf(
-                ContributesAssistedFactorySymbolProcessor.Provider()
-            )
-            kspWithCompilation = true
+            configureKsp {
+                symbolProcessorProviders += ContributesAssistedFactorySymbolProcessor.Provider()
+                withCompilation = true
+            }
             inheritClassPath = true
             messageOutputStream = System.out // Capture compiler output
         }
@@ -325,21 +324,22 @@ class MultipleRoundProcessingTest {
         // Verify compilation failed
         assertThat(result.exitCode).isEqualTo(KotlinCompilation.ExitCode.COMPILATION_ERROR)
 
-        // Verify error messages
+        // Verify error messages. Kotlin 2.3 reports unresolved references as
+        // `Unresolved reference 'X'.` (single-quoted) rather than `Unresolved reference: X`.
         val errors = result.messages
         assertThat(errors).apply {
             // Scope type error
-            contains("Unresolved reference: NonExistentScope")
+            contains("Unresolved reference 'NonExistentScope'")
 
             // Bound type error
-            contains("Unresolved reference: NonExistentBoundType")
+            contains("Unresolved reference 'NonExistentBoundType'")
 
             // Constructor parameter type errors
-            contains("Unresolved reference: UnresolvedParam1")
-            contains("Unresolved reference: UnresolvedParam2")
+            contains("Unresolved reference 'UnresolvedParam1'")
+            contains("Unresolved reference 'UnresolvedParam2'")
 
             // Supertype error
-            contains("Unresolved reference: UnresolvedSuperType")
+            contains("Unresolved reference 'UnresolvedSuperType'")
         }
 
         // Verify that no factory class was generated
@@ -388,10 +388,10 @@ class MultipleRoundProcessingTest {
                     """
                 )
             )
-            symbolProcessorProviders = mutableListOf(
-                ContributesAssistedFactorySymbolProcessor.Provider()
-            )
-            kspWithCompilation = true
+            configureKsp {
+                symbolProcessorProviders += ContributesAssistedFactorySymbolProcessor.Provider()
+                withCompilation = true
+            }
             inheritClassPath = true
         }
 
@@ -400,8 +400,9 @@ class MultipleRoundProcessingTest {
         // Verify compilation failed
         assertThat(result.exitCode).isEqualTo(KotlinCompilation.ExitCode.COMPILATION_ERROR)
 
-        // Verify specific error for unresolved parameter
-        assertThat(result.messages).contains("Unresolved reference: UnresolvedParam")
+        // Verify specific error for unresolved parameter. Kotlin 2.3 reports unresolved
+        // references as `Unresolved reference 'X'.` (single-quoted).
+        assertThat(result.messages).contains("Unresolved reference 'UnresolvedParam'")
 
         // Verify no factory was generated despite some types being valid
         assertThat(

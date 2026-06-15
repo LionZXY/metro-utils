@@ -1,11 +1,18 @@
 package uk.kulikov.metro.assisted
 
 /**
- * Allows to specify a custom key for assisted parameters. This is useful when you have multiple
- * parameters of the same type and you want to differentiate them.
+ * Maps a bound-type factory-method parameter to a constructor `@Assisted` parameter by name.
  *
- * Should be used instead of @Assisted annotation in your public factories bound by
- * @ContributesAssistedFactory annotation.
+ * Under Metro 1.x assisted parameters no longer carry string identifiers — they are matched
+ * between the bound type's factory method and the assisted-injection constructor by type, name
+ * and order. By default metro-utils matches them using the factory-method parameter name.
+ *
+ * Use [AssistedKey] on a bound-type factory-method parameter only when its name differs from the
+ * corresponding constructor `@Assisted` parameter name. The [value] is then treated as the
+ * expected constructor parameter name to match against.
+ *
+ * Note: the generated `@AssistedFactory` never emits a string `@Assisted` value; the generated
+ * factory-method parameters are simply named after the matched constructor parameters.
  */
 @Target(AnnotationTarget.VALUE_PARAMETER)
 public annotation class AssistedKey(
